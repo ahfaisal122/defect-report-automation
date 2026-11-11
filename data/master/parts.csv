@@ -1,0 +1,81 @@
+part_number,description,category,supplier_id
+BL-M10-0060,"Hex bolt M10x60, A4-80",bolt,SUP-014
+BL-M10-0080,"Hex bolt M10x80, A4-80",bolt,SUP-015
+BL-M12-0040,"Hex bolt M12x40, A4-80",bolt,SUP-014
+BL-M12-0080,"Hex bolt M12x80, A4-80",bolt,SUP-014
+BL-M12-0100,"Hex bolt M12x100, A4-80",bolt,SUP-014
+BL-M12-0120,"Hex bolt M12x120, A4-80",bolt,SUP-014
+BL-M16-0060,"Hex bolt M16x60, A4-80",bolt,SUP-014
+BL-M16-0080,"Hex bolt M16x80, A4-80",bolt,SUP-015
+BL-M16-0100,"Hex bolt M16x100, A4-80",bolt,SUP-014
+BL-M16-0120,"Hex bolt M16x120, A4-80",bolt,SUP-014
+BL-M20-0040,"Hex bolt M20x40, A4-80",bolt,SUP-015
+BL-M20-0060,"Hex bolt M20x60, A4-80",bolt,SUP-014
+BL-M20-0080,"Hex bolt M20x80, A4-80",bolt,SUP-015
+BL-M20-0100,"Hex bolt M20x100, A4-80",bolt,SUP-015
+BL-M20-0120,"Hex bolt M20x120, A4-80",bolt,SUP-014
+CB-145-2000,"Circuit breaker pole, 145 kV, 2000 A",circuit_breaker,SUP-003
+CB-145-3150,"Circuit breaker pole, 145 kV, 3150 A",circuit_breaker,SUP-002
+CB-145-4000,"Circuit breaker pole, 145 kV, 4000 A",circuit_breaker,SUP-001
+CB-245-1250,"Circuit breaker pole, 245 kV, 1250 A",circuit_breaker,SUP-001
+CB-245-3150,"Circuit breaker pole, 245 kV, 3150 A",circuit_breaker,SUP-002
+CB-245-4000,"Circuit breaker pole, 245 kV, 4000 A",circuit_breaker,SUP-003
+CB-420-2500,"Circuit breaker pole, 420 kV, 2500 A",circuit_breaker,SUP-003
+CB-420-4000,"Circuit breaker pole, 420 kV, 4000 A",circuit_breaker,SUP-003
+CB-72-1250,"Circuit breaker pole, 72 kV, 1250 A",circuit_breaker,SUP-001
+CB-72-2000,"Circuit breaker pole, 72 kV, 2000 A",circuit_breaker,SUP-003
+CB-72-2500,"Circuit breaker pole, 72 kV, 2500 A",circuit_breaker,SUP-002
+CB-72-3150,"Circuit breaker pole, 72 kV, 3150 A",circuit_breaker,SUP-003
+CT-145-0800,"Current transformer, 145 kV, 800/1 A",current_transformer,SUP-007
+CT-145-1200,"Current transformer, 145 kV, 1200/1 A",current_transformer,SUP-007
+CT-145-2000,"Current transformer, 145 kV, 2000/1 A",current_transformer,SUP-006
+CT-145-2400,"Current transformer, 145 kV, 2400/1 A",current_transformer,SUP-006
+CT-245-0600,"Current transformer, 245 kV, 600/1 A",current_transformer,SUP-006
+CT-245-2000,"Current transformer, 245 kV, 2000/1 A",current_transformer,SUP-007
+CT-245-2400,"Current transformer, 245 kV, 2400/1 A",current_transformer,SUP-006
+CT-420-0600,"Current transformer, 420 kV, 600/1 A",current_transformer,SUP-006
+CT-420-2000,"Current transformer, 420 kV, 2000/1 A",current_transformer,SUP-006
+CT-72-0800,"Current transformer, 72 kV, 800/1 A",current_transformer,SUP-006
+CT-72-1200,"Current transformer, 72 kV, 1200/1 A",current_transformer,SUP-006
+CT-72-1600,"Current transformer, 72 kV, 1600/1 A",current_transformer,SUP-006
+DS-145-1250,"Disconnector, 145 kV, 1250 A",disconnector,SUP-005
+DS-145-2000,"Disconnector, 145 kV, 2000 A",disconnector,SUP-004
+DS-145-2500,"Disconnector, 145 kV, 2500 A",disconnector,SUP-004
+DS-145-3150,"Disconnector, 145 kV, 3150 A",disconnector,SUP-005
+DS-245-2000,"Disconnector, 245 kV, 2000 A",disconnector,SUP-005
+DS-420-1250,"Disconnector, 420 kV, 1250 A",disconnector,SUP-005
+DS-420-2000,"Disconnector, 420 kV, 2000 A",disconnector,SUP-005
+DS-420-3150,"Disconnector, 420 kV, 3150 A",disconnector,SUP-004
+DS-72-1250,"Disconnector, 72 kV, 1250 A",disconnector,SUP-004
+DS-72-2000,"Disconnector, 72 kV, 2000 A",disconnector,SUP-004
+DS-72-2500,"Disconnector, 72 kV, 2500 A",disconnector,SUP-004
+DS-72-3150,"Disconnector, 72 kV, 3150 A",disconnector,SUP-005
+EN-145-3250,"Enclosure casting, breaker housing, 145 kV",enclosure,SUP-008
+EN-145-3833,"Enclosure casting, end cover, 145 kV",enclosure,SUP-008
+EN-145-4903,"Enclosure casting, end cover, 145 kV",enclosure,SUP-010
+EN-145-9559,"Enclosure casting, cable box, 145 kV",enclosure,SUP-009
+EN-245-0850,"Enclosure casting, cable box, 245 kV",enclosure,SUP-009
+EN-245-1391,"Enclosure casting, breaker housing, 245 kV",enclosure,SUP-008
+EN-245-6301,"Enclosure casting, T-piece, 245 kV",enclosure,SUP-010
+EN-245-9144,"Enclosure casting, end cover, 245 kV",enclosure,SUP-010
+EN-420-1239,"Enclosure casting, T-piece, 420 kV",enclosure,SUP-009
+EN-420-3914,"Enclosure casting, end cover, 420 kV",enclosure,SUP-010
+EN-72-1407,"Enclosure casting, end cover, 72 kV",enclosure,SUP-008
+EN-72-2145,"Enclosure casting, T-piece, 72 kV",enclosure,SUP-008
+EN-72-4841,"Enclosure casting, breaker housing, 72 kV",enclosure,SUP-008
+EN-72-6025,"Enclosure casting, cable box, 72 kV",enclosure,SUP-010
+GK-145-9297,"Flange gasket, 320 mm, 145 kV",gasket,SUP-012
+GK-245-2440,"O-ring seal, 180 mm, 245 kV",gasket,SUP-013
+GK-245-3556,"Flange gasket, 240 mm, 245 kV",gasket,SUP-012
+GK-245-6582,"Flange gasket, 560 mm, 245 kV",gasket,SUP-011
+GK-420-1184,"O-ring seal, 560 mm, 420 kV",gasket,SUP-012
+GK-420-3583,"Flange gasket, 560 mm, 420 kV",gasket,SUP-012
+GK-420-4404,"Flange gasket, 180 mm, 420 kV",gasket,SUP-012
+GK-420-4439,"O-ring seal, 240 mm, 420 kV",gasket,SUP-013
+GK-420-8279,"O-ring seal, 410 mm, 420 kV",gasket,SUP-013
+GK-420-9392,"Flange gasket, 180 mm, 420 kV",gasket,SUP-012
+GK-72-2387,"Flange gasket, 320 mm, 72 kV",gasket,SUP-011
+GK-72-4140,"Flange gasket, 320 mm, 72 kV",gasket,SUP-011
+GK-72-5255,"Flange gasket, 240 mm, 72 kV",gasket,SUP-012
+GK-72-7617,"O-ring seal, 560 mm, 72 kV",gasket,SUP-013
+GK-72-8930,"O-ring seal, 560 mm, 72 kV",gasket,SUP-013

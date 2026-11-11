@@ -1,0 +1,14 @@
+From: Mercedes Wagenknecht <mercedes.wagenknecht@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Fri, 25 Sep 2026 11:27
+Subject: Quality issue on production order SG-2026-0714
+
+Hi Quality Team,
+
+During final inspection yesterday on 24 September 2026, I checked the flange gaskets from Halden Seals Sp. z o.o., part number GK-245-3556. Out of the batch, 10 pieces have visible scratches right across the sealing surface, which makes them completely unusable and will cause gas leaks if installed on the 245 kV breaker.
+
+Since these parts cannot be reworked, we urgently need replacements or a quick supplier action to avoid delaying production order SG-2026-0714.
+
+Best regards,
+Mercedes Wagenknecht
+Assembly and Final Inspection

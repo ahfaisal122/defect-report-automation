@@ -1,0 +1,18 @@
+From: Roselinde Schinke <roselinde.schinke@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Tue, 08 Sep 2026 11:42
+Subject: Defective O-rings found at main assembly
+
+Hi Quality Team,
+
+I am writing to report a major issue we ran into yesterday on 2026-09-06 while working on the bay currently on the line in main assembly.
+
+We tried to install the GK-420-1184 O-ring seals we received from Halden Seals Sp. z o.o., but they are not going on properly.
+
+The bore diameter is completely out of tolerance and the parts just do not fit the mating flange.
+
+We have set aside a total of 10 pieces that showed this exact problem so far.
+
+Please let us know how you want us to handle these.
+Best regards,
+Roselinde Schinke

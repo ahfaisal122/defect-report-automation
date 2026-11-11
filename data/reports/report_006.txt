@@ -1,0 +1,13 @@
+From: Frieda Dobes <frieda.dobes@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Wed, 28 Oct 2026 13:53
+Subject: Defective hex bolts on SG-2026-0949
+
+Hi Quality Team,
+
+During final inspection today, 28 October 2026, we checked the hex bolts M20x80, A4-80, part number BL-M20-0080, delivered by Solvik Verbindungstechnik GmbH for production order SG-2026-0949. Out of the batch, 24 pieces have noticeable dents and chipped surface coatings that look like transport damage.
+
+These damaged bolts are completely unusable for assembly and will affect the proper function of the switchgear if installed, so we need immediate replacements or a quick action from the supplier, which unfortunately means this order is likely to be delayed.
+
+Best regards,
+Frieda Dobes

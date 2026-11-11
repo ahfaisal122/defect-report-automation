@@ -1,0 +1,13 @@
+From: Susi Williams <susi.williams@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Sun, 13 Sep 2026 15:13
+Subject: Quality issue on SG-2026-0886 enclosures
+
+Hi Quality Team,
+
+During the gas leak test today, 2026-09-13, we found a serious issue on production order SG-2026-0886 involving part number EN-72-2145, which are the 72 kV T-piece enclosure castings from Ostwerk Aluminiumguss GmbH.
+
+A total of 3 housings triggered the leak detector alarm right at the bursting disc connection, posing an unacceptable risk of gas release and electrical failure in service that forces us to halt shipment immediately until these units are checked.
+
+Best regards,
+Susi Williams

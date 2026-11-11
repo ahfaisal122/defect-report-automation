@@ -1,0 +1,25 @@
+# Pinned to the versions the project was built and tested with (Python 3.12).
+
+# Core
+pydantic==2.14.3
+pydantic-settings==2.16.2
+google-genai==3.2.0
+tenacity==9.1.4
+httpx==0.28.1
+
+# Mock QM API
+fastapi==0.162.4
+uvicorn==0.54.0
+
+# Review screen and metrics page
+streamlit==1.67.0
+pandas==3.1.1
+altair==6.3.0
+
+# Synthetic data
+Faker==40.54.0
+
+# Testing and linting
+pytest==9.2.0
+pytest-cov==7.1.0
+ruff==0.17.4

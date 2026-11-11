@@ -1,0 +1,24 @@
+From: Roberto Hermann <roberto.hermann@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Mon, 02 Nov 2026 20:35
+Subject: FW: Wiring issue on CB-72-2500 units from order SG-2026-0219
+
+Hi QA, please take a look at this shop-floor report for your records. Best, Roberto
+
+---------- Forwarded message ----------
+From: Lutz Häring <lutz.haering@voltaris-switchgear.example>
+Date: Mon, 02 Nov 2026 16:19
+Subject: Wiring issue on CB-72-2500 units from order SG-2026-0219
+To: Roberto Hermann <roberto.hermann@voltaris-switchgear.example>
+
+Hi Quality Team,
+
+I was doing the wiring check on Saturday, 31.10.2026, and noticed something off on the circuit breaker poles. We are working on production order SG-2026-0219 using parts from Kestrel Interrupter Works Ltd, specifically part number CB-72-2500.
+
+On 4 of these poles, the auxiliary wiring was landed on the wrong terminal blocks during pre-assembly. It is just a miswiring on the control side and looks a bit messy, but it does not affect the actual mechanism or performance at all.
+
+I can easily rework the connections right here at the station on Monday morning without holding anything up. We will still hit our delivery target without any issues.
+
+Best regards,
+Lutz Häring
+Assembly Technician

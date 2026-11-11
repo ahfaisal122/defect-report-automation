@@ -1,0 +1,13 @@
+From: Else Wood <else.wood@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Sat, 12 Sep 2026 17:10
+Subject: Quality issues on production order SG-2026-0159
+
+Hi Quality Team,
+
+We ran into a serious problem yesterday, 2026-09-11, during testing on production order SG-2026-0159. While we were working at the High voltage test station, we tested the CB-72-2500 circuit breaker poles from Kestrel Interrupter Works Ltd. Out of the batch, 3 units failed during the power-frequency withstand test with a clear flashover. This means we cannot pass these units because a failure like this in the field would cause a dangerous electrical failure, an unexpected gas release, and a major safety hazard for operators. We have had to halt our outbound shipments for this line immediately until we figure out what went wrong with these poles.
+
+We also found another issue during final inspection on the same order. This time it involves 5 of the EN-420-3914 enclosure casting end covers from Varnagy Castings Kft. These pieces have visible dents and chipped coating on the exterior surfaces, which looks like it happened during transport. We are classifying this as a major issue since the damage compromises the environmental sealing and corrosion protection.
+
+Best regards,
+Else Wood

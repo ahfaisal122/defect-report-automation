@@ -1,0 +1,14 @@
+From: Jamie Peukert <jamie.peukert@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Sat, 05 Sep 2026 17:56
+Subject: Defect report SG-2026-0766 enclosure castings
+
+Hi Quality Team,
+
+During incoming inspection today, 05 September 2026, I checked the new delivery of part number EN-145-3250 from Ostwerk Aluminiumguss GmbH for production order SG-2026-0766. I found metal swarf left inside 3 of the housings from the machining process, but the castings themselves are fully sound.
+
+The swarf is purely cosmetic and can be easily brushed and blown out right here at the station with no effect on function or our delivery date, though we should let the supplier know about the cleanup needed.
+
+Best regards,
+Jamie Peukert
+Incoming Inspection

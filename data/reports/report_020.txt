@@ -1,0 +1,21 @@
+From: Ilhan Adler <ilhan.adler@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Sat, 10 Oct 2026 08:43
+Subject: Quality issue with delivery on production order SG-2026-0736
+
+Hi Quality Team,
+
+I am writing to report a problem we found today, 2026-10-10, at the Incoming inspection station regarding the recent shipment from Zelenka Transformatory s.r.o.
+
+During the check, we noticed that the delivered items do not match the ordered specification for part number CT-245-2000.
+
+The total quantity affected is 2 units sitting on pallet number four near the middle bay.
+
+We consider the severity of this issue to be minor since the parts are still boxed and have not yet been moved to the main assembly line.
+
+Best regards,
+Ilhan Adler
+Senior Quality Inspector
+Incoming Goods Department
++49 30 5550 4921
+This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error please notify the system manager. This message contains confidential information and is intended only for the individual named. If you are not the named addressee you should not disseminate, distribute or copy this e-mail.

@@ -1,0 +1,13 @@
+From: Hannah Smith <hannah.smith@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Sat, 24 Oct 2026 12:50
+Subject: Quality issues on production order SG-2026-0243
+
+Hi Quality Team,
+
+I am writing to report a major defect we found during incoming inspection yesterday, 2026-10-22, regarding production order SG-2026-0243. While checking the delivery from Brennholt Elastomer GmbH, we discovered metal swarf embedded inside the O-ring seals, part number GK-245-2440 (180 mm, 245 kV). A total of 5 pieces are affected by this contamination, which poses a serious risk to sealing integrity.
+
+Additionally, we have a major issue coming from the gas leak test station on the same order. Two of the enclosure casting end covers, part number EN-420-3914 supplied by Varnagy Castings Kft., triggered the leak detector alarm right at the bursting disc connection.
+
+Best regards,
+Hannah Smith
