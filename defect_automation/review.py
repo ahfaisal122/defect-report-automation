@@ -106,6 +106,12 @@ def load_review_item(conn: sqlite3.Connection, report_id: int) -> ReviewItem:
     return item
 
 
+def check_approvable(fields: ExtractedFields) -> None:
+    """A ticket needs at least these three. Raises ReviewError naming what is missing."""
+    if fields.severity is None or fields.defect_type is None or not fields.defect_description:
+        raise ReviewError("severity, defect type and description are needed for a ticket")
+
+
 def submit_review(
     conn: sqlite3.Connection,
     run_id: str,
@@ -129,8 +135,7 @@ def submit_review(
     if action == APPROVE:
         if fields is None:
             raise ReviewError("approving needs the ticket fields")
-        if fields.severity is None or fields.defect_type is None or not fields.defect_description:
-            raise ReviewError("severity, defect type and description are needed for a ticket")
+        check_approvable(fields)
         mapping = prepare_report_text(report["source_type"], report["raw_text"]).mapping
         stored = fields.model_copy(
             update={

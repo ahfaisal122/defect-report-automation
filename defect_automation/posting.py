@@ -26,6 +26,7 @@ from defect_automation.domain import ReportStatus, Severity
 from defect_automation.extraction import prepare_report_text
 from defect_automation.logging_setup import get_logger
 from defect_automation.masking import unmask
+from defect_automation.parsing import parse_report
 from defect_automation.schemas import ExtractedFields
 
 NOTIFICATIONS_PATH = "/api/v1/notifications"
@@ -117,6 +118,35 @@ def build_payload(conn: sqlite3.Connection, report: sqlite3.Row) -> TicketPayloa
         source_report=report["file_hash"],
         approved_by=approval["reviewer"] if approval is not None else AUTO_APPROVER,
     )
+
+
+@dataclass(frozen=True)
+class PostedTicket:
+    ticket_id: str
+    posted_at: str
+    file_name: str
+    report_id: int
+    payload: TicketPayload  # what was sent to the QM system, rebuilt from stored data
+    original_text: str
+
+
+def list_tickets(conn: sqlite3.Connection) -> list[PostedTicket]:
+    """Every posted ticket, newest first, with the content that was sent. Read-only."""
+    rows = conn.execute(
+        "SELECT t.qm_ticket_id, t.posted_at, r.* FROM tickets t "
+        "JOIN reports r ON r.id = t.report_id ORDER BY t.id DESC"
+    ).fetchall()
+    return [
+        PostedTicket(
+            ticket_id=row["qm_ticket_id"],
+            posted_at=row["posted_at"],
+            file_name=row["file_name"],
+            report_id=row["id"],
+            payload=build_payload(conn, row),
+            original_text=parse_report(row["source_type"], row["raw_text"], clean=False).as_text(),
+        )
+        for row in rows
+    ]
 
 
 def _wait_seconds(response: httpx.Response | None, attempt: int, backoff: float) -> float:

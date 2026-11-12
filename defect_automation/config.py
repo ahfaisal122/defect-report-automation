@@ -39,6 +39,8 @@ class Settings(BaseSettings):
 
     # Review screen. No default: the app refuses to open until a password is set in .env.
     review_password: SecretStr | None = None
+    # Demo switch: accept any password. Off by default. Never turn it on for real data.
+    review_login_open: bool = False
 
     # QM API and posting (FR-08, NFR-03)
     qm_api_url: str = "http://127.0.0.1:8001"

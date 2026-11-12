@@ -18,12 +18,19 @@ from defect_automation.db import connect, init_db, new_run_id
 from defect_automation.domain import DefectType, Severity
 from defect_automation.logging_setup import configure_logging
 from defect_automation.metrics import Metrics, compute_metrics
-from defect_automation.posting import make_http_client, post_report, qm_available
+from defect_automation.posting import (
+    AUTO_APPROVER,
+    list_tickets,
+    make_http_client,
+    post_report,
+    qm_available,
+)
 from defect_automation.review import (
     APPROVE,
     REJECT,
     ReviewError,
     ReviewItem,
+    check_approvable,
     load_review_item,
     review_queue,
     submit_review,
@@ -44,6 +51,30 @@ FIELD_LABELS = {
     "reporter": "Reporter",
 }
 
+# Approve is green and Reject is red, on the form and in the confirmation popup.
+# Streamlit gives a widget with key "x" the CSS class "st-key-x". The labels still say
+# what each button does, so the meaning never depends on colour alone.
+APPROVE_GREEN, APPROVE_GREEN_HOVER = "#1a7f37", "#156a2d"
+REJECT_RED, REJECT_RED_HOVER = "#c62828", "#a82020"
+DECISION_BUTTON_CSS = f"""
+<style>
+.st-key-approve_button button, .st-key-confirm_approve_button button {{
+    background-color: {APPROVE_GREEN}; border-color: {APPROVE_GREEN}; color: #ffffff;
+}}
+.st-key-approve_button button:hover, .st-key-confirm_approve_button button:hover,
+.st-key-approve_button button:focus-visible, .st-key-confirm_approve_button button:focus-visible {{
+    background-color: {APPROVE_GREEN_HOVER}; border-color: {APPROVE_GREEN_HOVER}; color: #ffffff;
+}}
+.st-key-reject_button button, .st-key-confirm_reject_button button {{
+    background-color: {REJECT_RED}; border-color: {REJECT_RED}; color: #ffffff;
+}}
+.st-key-reject_button button:hover, .st-key-confirm_reject_button button:hover,
+.st-key-reject_button button:focus-visible, .st-key-confirm_reject_button button:focus-visible {{
+    background-color: {REJECT_RED_HOVER}; border-color: {REJECT_RED_HOVER}; color: #ffffff;
+}}
+</style>
+"""
+
 settings = get_settings()
 
 
@@ -61,7 +92,10 @@ def require_login() -> str:
     if st.session_state.get("reviewer"):
         return str(st.session_state["reviewer"])
     st.title("Defect Report Automation")
-    if settings.review_password is None or not settings.review_password.get_secret_value():
+    expected = settings.review_password.get_secret_value() if settings.review_password else ""
+    if settings.review_login_open:
+        st.warning("Demo mode: any password is accepted (REVIEW_LOGIN_OPEN is on).")
+    elif not expected:
         st.error("No review password is set. Add REVIEW_PASSWORD to the .env file and restart.")
         st.stop()
     with st.form("login"):
@@ -69,11 +103,16 @@ def require_login() -> str:
         password = st.text_input("Password", type="password")
         submitted = st.form_submit_button("Log in", type="primary")
     if submitted:
-        expected = settings.review_password.get_secret_value()
-        if name.strip() and hmac.compare_digest(password.encode(), expected.encode()):
+        password_ok = settings.review_login_open or hmac.compare_digest(
+            password.encode(), expected.encode()
+        )
+        if name.strip() and password_ok:
             st.session_state["reviewer"] = name.strip()
             st.rerun()
-        st.error("Enter your name and the correct password.")
+        if settings.review_login_open:
+            st.error("Enter your name.")
+        else:
+            st.error("Enter your name and the correct password.")
     st.stop()
 
 
@@ -86,6 +125,16 @@ def _label(item: ReviewItem, name: str, threshold: float) -> str:
         return FIELD_LABELS[name]
     flag = " ⚠" if score < threshold else ""
     return f"{FIELD_LABELS[name]} · confidence {score:.2f}{flag}"
+
+
+def _text(value: str | None) -> str:
+    """A missing field starts as an empty box, never as None."""
+    return value or ""
+
+
+def _clean(value: str | None) -> str | None:
+    """An empty or blank box means the field is missing."""
+    return (value or "").strip() or None
 
 
 def _select(label: str, options: list[str], current: str | None, key: str) -> str | None:
@@ -105,13 +154,15 @@ def _field_form(item: ReviewItem, stations: list[str]) -> tuple[dict[str, object
         left, right = st.columns(2)
         with left:
             order = st.text_input(
-                _label(item, "order_number", t), f.order_number if f else "", key=k + "order"
+                _label(item, "order_number", t),
+                _text(f.order_number if f else None),
+                key=k + "order",
             )
             part = st.text_input(
-                _label(item, "part_number", t), f.part_number if f else "", key=k + "part"
+                _label(item, "part_number", t), _text(f.part_number if f else None), key=k + "part"
             )
             supplier = st.text_input(
-                _label(item, "supplier", t), f.supplier if f else "", key=k + "supplier"
+                _label(item, "supplier", t), _text(f.supplier if f else None), key=k + "supplier"
             )
             quantity = st.number_input(
                 _label(item, "quantity_affected", t),
@@ -121,7 +172,7 @@ def _field_form(item: ReviewItem, stations: list[str]) -> tuple[dict[str, object
                 key=k + "quantity",
             )
             reporter = st.text_input(
-                _label(item, "reporter", t), f.reporter if f else "", key=k + "reporter"
+                _label(item, "reporter", t), _text(f.reporter if f else None), key=k + "reporter"
             )
         with right:
             defect_type = _select(
@@ -151,45 +202,45 @@ def _field_form(item: ReviewItem, stations: list[str]) -> tuple[dict[str, object
             )
         description = st.text_area(
             _label(item, "defect_description", t),
-            f.defect_description if f else "",
+            _text(f.defect_description if f else None),
             key=k + "description",
         )
         note = st.text_input("Note (optional, stored in the audit trail)", key=k + "note")
-        approve_col, reject_col, _ = st.columns([2, 1, 3])
-        approved = approve_col.form_submit_button("Approve and post", type="primary")
-        rejected = reject_col.form_submit_button("Reject")
+        approve_col, reject_col = st.columns(2)  # equal width, so neither label is cut off
+        approved = approve_col.form_submit_button(
+            "Approve and post", type="primary", width="stretch", key="approve_button"
+        )
+        rejected = reject_col.form_submit_button(
+            "Reject", type="primary", width="stretch", key="reject_button"
+        )
     values: dict[str, object] = {
-        "order_number": order.strip() or None,
-        "part_number": part.strip() or None,
-        "supplier": supplier.strip() or None,
+        "order_number": _clean(order),
+        "part_number": _clean(part),
+        "supplier": _clean(supplier),
         "defect_type": defect_type,
-        "defect_description": description.strip() or None,
+        "defect_description": _clean(description),
         "quantity_affected": quantity,
         "severity": severity,
         "detected_at": station,
         "detected_on": detected_on,
-        "reporter": reporter.strip() or None,
+        "reporter": _clean(reporter),
     }
     return values, note, APPROVE if approved else REJECT if rejected else None
 
 
 def _decide(
-    conn: sqlite3.Connection,
     item: ReviewItem,
     reviewer: str,
     action: str,
-    values: dict[str, object],
+    fields: ExtractedFields | None,
     note: str,
 ) -> None:
+    """Save the decision and, on approve, post the ticket. Runs after the reviewer confirmed."""
     run_id = new_run_id()
     configure_logging(settings.log_path, run_id)
+    conn = open_db()  # a dialog reruns on its own thread, so it needs its own connection
     try:
-        fields = ExtractedFields.model_validate(values) if action == APPROVE else None
-        submit_review(conn, run_id, item.report_id, reviewer, action, fields, note)
-    except ValidationError as exc:
-        problems = "; ".join(f"{e['loc'][0]}: {e['msg']}" for e in exc.errors())
-        st.error(f"Not saved. {problems}")
-        return
+        submit_review(conn, run_id, item.report_id, reviewer, action, fields, note or "")
     except ReviewError as exc:
         st.error(f"Not saved: {exc}")
         return
@@ -209,11 +260,72 @@ def _decide(
                 f"{item.file_name} approved, but the QM API did not take it. "
                 "It posts on the next pipeline run."
             )
-    st.rerun()
+    st.rerun()  # closes the dialog and refreshes the queue
+
+
+def _clear_pending() -> None:
+    st.session_state.pop("pending", None)
+
+
+@st.dialog("Please confirm", on_dismiss=_clear_pending)
+def _confirm(
+    item: ReviewItem,
+    reviewer: str,
+    action: str,
+    fields: ExtractedFields | None,
+    note: str,
+) -> None:
+    """Nothing is saved or posted until the reviewer says yes here."""
+    if action == APPROVE:
+        st.write(f"Are you sure you want to approve **{item.file_name}**?")
+        if fields is not None and fields.severity == Severity.CRITICAL:
+            st.warning("This is a critical defect.")
+        st.caption("The ticket is posted to the QM system right away. This cannot be undone.")
+        yes_label, yes_key = "Yes, approve and post", "confirm_approve_button"
+    else:
+        st.write(f"Are you sure you want to reject **{item.file_name}**?")
+        st.caption("No ticket will be created. This cannot be undone.")
+        yes_label, yes_key = "Yes, reject", "confirm_reject_button"
+    yes, no = st.columns(2)
+    if yes.button(yes_label, type="primary", width="stretch", key=yes_key):
+        _clear_pending()
+        _decide(item, reviewer, action, fields, note)
+    if no.button("Cancel", width="stretch"):
+        _clear_pending()
+        st.rerun()
+
+
+def _start_decision(
+    item: ReviewItem, reviewer: str, action: str, values: dict[str, object], note: str
+) -> None:
+    """Check the form, then remember the decision until the reviewer answers the popup.
+
+    The decision waits in the session, so the popup's answer is handled the same way
+    whether Streamlit reruns only the popup or the whole page.
+    """
+    fields: ExtractedFields | None = None
+    if action == APPROVE:
+        try:
+            fields = ExtractedFields.model_validate(values)
+            check_approvable(fields)
+        except ValidationError as exc:
+            problems = "; ".join(f"{e['loc'][0]}: {e['msg']}" for e in exc.errors())
+            st.error(f"Not saved. {problems}")
+            return
+        except ReviewError as exc:
+            st.error(f"Not saved: {exc}")
+            return
+    st.session_state["pending"] = {
+        "report_id": item.report_id,
+        "action": action,
+        "fields": fields,
+        "note": note,
+    }
 
 
 def review_page() -> None:
     reviewer = st.session_state["reviewer"]
+    st.html(DECISION_BUTTON_CSS)
     st.title("Review queue")
     if flash := st.session_state.pop("flash", None):
         st.success(flash)
@@ -244,7 +356,65 @@ def review_page() -> None:
         stations = [r[0] for r in conn.execute("SELECT station_code FROM master_stations")]
         values, note, action = _field_form(item, stations)
         if action:
-            _decide(conn, item, reviewer, action, values, note)
+            _start_decision(item, reviewer, action, values, note)
+    pending = st.session_state.get("pending")
+    if pending and pending["report_id"] == item.report_id:
+        _confirm(item, reviewer, pending["action"], pending["fields"], pending["note"])
+    elif pending:
+        _clear_pending()  # the reviewer moved to another report: drop the stale decision
+
+
+# --- tickets page ----------------------------------------------------------------------
+
+
+def tickets_page() -> None:
+    st.title("Tickets")
+    tickets = list_tickets(open_db())
+    if not tickets:
+        st.info("No tickets have been posted yet.")
+        return
+    st.caption(
+        f"{len(tickets)} tickets posted to the QM system, newest first. "
+        "This page is read-only: tickets cannot be changed or deleted here."
+    )
+    table = pd.DataFrame(
+        [
+            {
+                "Ticket": t.ticket_id,
+                "Posted (UTC)": t.posted_at[:16].replace("T", " "),
+                "Report": t.file_name,
+                "Order": t.payload.order_number,
+                "Part": t.payload.part_number,
+                "Supplier": t.payload.supplier,
+                "Defect type": t.payload.defect_type,
+                "Severity": t.payload.severity,
+                "Qty": t.payload.quantity_affected,
+                "Approved": "automatic"
+                if t.payload.approved_by == AUTO_APPROVER
+                else "human review",
+            }
+            for t in tickets
+        ]
+    )
+    st.dataframe(table, hide_index=True, width="stretch")
+
+    st.subheader("Ticket details")
+    by_id = {t.ticket_id: t for t in tickets}
+    ticket = by_id[
+        st.selectbox("Ticket", list(by_id), format_func=lambda i: f"{i} · {by_id[i].file_name}")
+    ]
+    original, sent = st.columns(2)
+    with original:
+        st.markdown("**Original report**")
+        st.code(ticket.original_text, language=None, wrap_lines=True)
+    with sent:
+        st.markdown("**Ticket as posted**")
+        details = ticket.payload.model_dump(exclude={"source_report", "approved_by"})
+        rows = [
+            {"Field": FIELD_LABELS[name], "Value": "–" if value is None else str(value)}
+            for name, value in details.items()
+        ]
+        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
 
 
 # --- metrics page ----------------------------------------------------------------------
@@ -373,11 +543,13 @@ st.set_page_config(page_title="Defect Report Automation", layout="wide")
 reviewer_name = require_login()
 with st.sidebar:
     st.write(f"Logged in as **{reviewer_name}**")
-    page = st.radio("Page", ["Review queue", "Metrics"])
+    page = st.radio("Page", ["Review queue", "Tickets", "Metrics"])
     if st.button("Log out"):
         del st.session_state["reviewer"]
         st.rerun()
 if page == "Metrics":
     metrics_page()
+elif page == "Tickets":
+    tickets_page()
 else:
     review_page()

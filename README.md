@@ -53,7 +53,7 @@ Three terminals, each with the virtual env active:
 ```bash
 python -m defect_automation qm-api    # 1: the mock QM API, port 8001
 python -m defect_automation run       # 2: process data/reports/ from file to ticket
-streamlit run streamlit_app.py        # 3: review screen and metrics, port 8501
+streamlit run streamlit_app.py        # 3: review screen, tickets and metrics, port 8501
 ```
 
 `run` reads every report in the input folder. Each one ends as a posted ticket or as an
@@ -67,7 +67,7 @@ python -m defect_automation run --retry-failed   # put the error queue back in l
 python -m defect_automation eval                 # score the 20 labelled reports
 python -m defect_automation eval --history       # compare all saved eval runs
 python -m defect_automation ingest | extract | post   # single steps
-pytest                                           # 98 unit and integration tests
+pytest                                           # 103 unit and integration tests
 ```
 
 To try your own report, drop a `.txt` or `.eml` file into `data/reports/` and run again.
@@ -127,7 +127,7 @@ calls, next to the parser, the validators and the QM API.
 | `defect_automation/metrics.py` | Numbers for the metrics page |
 | `defect_automation/evaluation.py` | Scores the pipeline on the labelled reports |
 | `defect_automation/logging_setup.py` | JSON logs with a run ID |
-| `streamlit_app.py` | Review screen and metrics page |
+| `streamlit_app.py` | Review screen, tickets page and metrics page |
 | `mock_qm/app.py` | The mock QM system (FastAPI), with built-in faults |
 | `scripts/` | Synthetic data generators |
 | `data/master/` | 50 orders, 80 parts, 15 suppliers, 12 stations |
@@ -239,6 +239,11 @@ Interactive docs are at <http://127.0.0.1:8001/docs> while the mock runs.
   not user accounts. A real deployment would use company single sign-on.
 - **Service account.** The pipeline calls the QM API with its own bearer token
   (`QM_API_TOKEN`). The default value only suits the local mock.
+- **Demo switch.** `REVIEW_LOGIN_OPEN=true` in `.env` makes the login accept any
+  password, and the login screen says so. It is off by default and is only for a local
+  demo with fake data.
+- **Every decision is confirmed.** Approve and Reject each open a popup that asks
+  "Are you sure?". Nothing is saved or posted until the reviewer says yes.
 - **Append-only history.** Decisions and audit events are only ever added. Nothing in the
   code updates or deletes them.
 - **Works council note.** The metrics page counts reports and defects. It shows no
@@ -276,7 +281,7 @@ Interactive docs are at <http://127.0.0.1:8001/docs> while the mock runs.
 | UI | Login, review, edit, approve and the metrics page, driven by Streamlit's test driver |
 | AI evaluation | `python -m defect_automation eval` on the 20 labelled reports |
 
-98 tests, 85% line coverage (`pytest --cov=defect_automation --cov=mock_qm`). The parts
+103 tests, 85% line coverage (`pytest --cov=defect_automation --cov=mock_qm`). The parts
 without tests are the command-line wrapper and the live Gemini client.
 
 How the eval scores:
