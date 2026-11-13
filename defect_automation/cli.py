@@ -134,6 +134,18 @@ def cmd_qm_api(_: argparse.Namespace) -> None:
     )
 
 
+def cmd_api(_: argparse.Namespace) -> None:
+    import uvicorn
+
+    uvicorn.run(
+        "defect_automation.api:app_from_settings",
+        factory=True,
+        host="127.0.0.1",
+        port=get_settings().pipeline_api_port,
+        log_level="warning",
+    )
+
+
 def cmd_run(args: argparse.Namespace) -> None:
     settings = get_settings()
     conn = _open_db()
@@ -192,6 +204,9 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--history", action="store_true", help="compare all saved runs")
     evaluate.set_defaults(func=cmd_eval)
     sub.add_parser("qm-api", help="start the mock QM API").set_defaults(func=cmd_qm_api)
+    sub.add_parser("api", help="start the pipeline API for an orchestrator (UiPath)").set_defaults(
+        func=cmd_api
+    )
     return parser
 
 

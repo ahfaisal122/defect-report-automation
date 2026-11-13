@@ -42,6 +42,12 @@ class Settings(BaseSettings):
     # Demo switch: accept any password. Off by default. Never turn it on for real data.
     review_login_open: bool = False
 
+    # Pipeline API, called by an orchestrator such as UiPath. No default token: the API
+    # answers 503 until one is set in .env.
+    pipeline_api_token: SecretStr | None = None
+    pipeline_api_port: int = 8002
+    review_url: str = "http://localhost:8501"
+
     # QM API and posting (FR-08, NFR-03)
     qm_api_url: str = "http://127.0.0.1:8001"
     qm_api_token: SecretStr = SecretStr("local-mock-service-account")  # mock only

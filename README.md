@@ -67,10 +67,71 @@ python -m defect_automation run --retry-failed   # put the error queue back in l
 python -m defect_automation eval                 # score the 20 labelled reports
 python -m defect_automation eval --history       # compare all saved eval runs
 python -m defect_automation ingest | extract | post   # single steps
-pytest                                           # 103 unit and integration tests
+python -m defect_automation api                  # pipeline API for UiPath, port 8002
+pytest                                           # 111 unit and integration tests
 ```
 
 To try your own report, drop a `.txt` or `.eml` file into `data/reports/` and run again.
+
+## UiPath trigger
+
+Added after the first build. A UiPath workflow starts a run and tells a person when
+something needs them. UiPath only triggers and notifies. Extraction, validation, routing
+and posting stay in the Python code.
+
+```mermaid
+flowchart LR
+    U[UiPath workflow<br/>Assistant on the Mac, or a schedule] -- POST /runs<br/>bearer token --> P[Pipeline API<br/>port 8002]
+    P --> R[run_pipeline<br/>same code as the run command]
+    R -- counts only --> U
+    U -- needs_attention is true --> N[Message with the count<br/>and the review link]
+```
+
+Start it with `python -m defect_automation api`. Set `PIPELINE_API_TOKEN` in `.env` first:
+without a token the API answers 503.
+
+| Call | What it does |
+| --- | --- |
+| `GET /health` | Answers `{"status": "ok"}`. No token needed |
+| `POST /runs` | Runs the pipeline once and returns the counts below |
+| `GET /status` | Reports by status, ticket count, size of the review queue |
+
+`POST /runs` answers with flat JSON, so a workflow can read it without mapping:
+
+```json
+{
+  "run_id": "568b5a0d1e49",
+  "new_reports": 0,
+  "duplicates_skipped": 30,
+  "auto_approved": 0,
+  "sent_to_review": 0,
+  "posted": 0,
+  "failed": 0,
+  "waiting_for_review": 7,
+  "needs_attention": true,
+  "stopped_by_cost_cap": false,
+  "qm_unavailable": false,
+  "review_url": "http://localhost:8501"
+}
+```
+
+- The answer holds counts only: no report text and no names.
+- One run at a time. A second call during a run gets 409.
+- Calling it again is safe, for the same reason `run` is.
+- The API listens on `127.0.0.1` only, so the workflow has to run on the same machine
+  (UiPath Assistant for macOS). A cloud robot cannot reach it.
+
+The workflow, built in UiPath Studio Web as an RPA Workflow and run on the local robot
+(the "Local" target, not "Cloud"):
+
+1. **Manual Trigger**.
+2. **HTTP Request**: `POST http://127.0.0.1:8002/runs`, header
+   `Authorization: Bearer <PIPELINE_API_TOKEN>`, no body.
+3. **Log Message** with the response status code.
+4. **Deserialize JSON** on the response text, for later steps that need single values.
+5. **If** the response text contains `"needs_attention":true`: **Message Box** saying
+   reports are waiting, with the review link.
+6. **Else**: **Log Message** "Run finished, nothing to review".
 
 ## Architecture
 
@@ -123,6 +184,7 @@ calls, next to the parser, the validators and the QM API.
 | `defect_automation/routing.py` | The routing rules: human review or auto-approve |
 | `defect_automation/posting.py` | Builds the ticket and posts it with retries and an idempotency key |
 | `defect_automation/pipeline.py` | Moves reports through the status flow |
+| `defect_automation/api.py` | HTTP door to the pipeline, for an orchestrator such as UiPath |
 | `defect_automation/review.py` | Review queue, review item, saving a decision |
 | `defect_automation/metrics.py` | Numbers for the metrics page |
 | `defect_automation/evaluation.py` | Scores the pipeline on the labelled reports |
@@ -278,10 +340,11 @@ Interactive docs are at <http://127.0.0.1:8001/docs> while the mock runs.
 | Integration | Folder to routed report, and approved report to posted ticket against the mock API in-process |
 | Failure | 503s, lost responses, rate limits, timeouts, malformed model answers, a crash between steps |
 | Idempotency | Same folder twice, same report posted twice, a crash after the API answered |
+| API | Token check, run counts, repeat run, no report text in the answer |
 | UI | Login, review, edit, approve and the metrics page, driven by Streamlit's test driver |
 | AI evaluation | `python -m defect_automation eval` on the 20 labelled reports |
 
-103 tests, 85% line coverage (`pytest --cov=defect_automation --cov=mock_qm`). The parts
+111 tests, 85% line coverage (`pytest --cov=defect_automation --cov=mock_qm`). The parts
 without tests are the command-line wrapper and the live Gemini client.
 
 How the eval scores:
@@ -310,6 +373,7 @@ How the eval scores:
 Not in this build: German reports, PDFs and scanned notes, a live inbox watcher and IMAP
 reader, model comparison and an OpenAI fallback, bill of materials checks, the morning
 summary email, a Power BI dashboard, a real SAP connection, PostgreSQL, Docker Compose, CI,
-the UiPath bot with the legacy web form, duplicate-defect linking, the 90-day retention
-purge and a separate pipeline API.
+the UiPath bot that fills the legacy web form, duplicate-defect linking and the 90-day
+retention purge. (A small pipeline API and a UiPath trigger workflow were added after the
+first build, see UiPath trigger.)
 # defect-report-automation
