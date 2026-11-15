@@ -1,0 +1,13 @@
+From: Ernst Juncken <ernst.juncken@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Mon, 26 Oct 2026 09:30
+Subject: Missing parts in fastener delivery SG-2026-0243
+
+Hi Quality Team,
+
+Yesterday, on 25 Oct 2026, we opened a delivery of hex bolts part BL-M12-0080 from Wexmoor Fasteners Ltd at the Pre-assembly station for production order SG-2026-0243 and found that 50 items are missing from the kit.
+
+Without these bolts we cannot complete the assembly as the current parts are unusable and this function is directly affected, so we need an immediate replacement or supplier action which may delay the order.
+
+Best regards,
+Ernst Juncken

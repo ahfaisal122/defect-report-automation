@@ -1,0 +1,68 @@
+{
+  "run_at": "2026-11-11T21:52:40+00:00",
+  "model": "gemini-3.5-flash-lite",
+  "prompt_version": "extraction_v1",
+  "confidence_threshold": 0.85,
+  "reports": 20,
+  "field_accuracy": 1.0,
+  "per_field": {
+    "order_number": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    },
+    "part_number": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    },
+    "supplier": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    },
+    "defect_type": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    },
+    "quantity_affected": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    },
+    "severity": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    },
+    "detected_at": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    },
+    "detected_on": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    },
+    "reporter": {
+      "correct": 20,
+      "total": 20,
+      "accuracy": 1.0
+    }
+  },
+  "critical_total": 4,
+  "critical_sent_to_review": 4,
+  "critical_rated_critical_by_model": 4,
+  "critical_recall": 1.0,
+  "must_review_total": 9,
+  "must_review_caught": 9,
+  "sent_to_review": 10,
+  "review_rate": 0.5,
+  "extra_reviews": 1,
+  "auto_approved": 10,
+  "auto_approved_with_errors": 0,
+  "cost_per_report_eur": 0.00043424499999999993,
+  "mismatches": []
+}

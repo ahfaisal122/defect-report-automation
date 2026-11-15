@@ -1,0 +1,16 @@
+# One look for every page: a soft blue-grey page, white cards, a dark blue menu.
+# The accent blue is the same blue the charts use. Green, amber and red carry meaning
+# (done, waiting, rejected) and are set in streamlit_app.py.
+[theme]
+base = "light"
+primaryColor = "#2a78d6"
+backgroundColor = "#f3f6fb"
+secondaryBackgroundColor = "#e4ebf5"
+textColor = "#1b2a41"
+codeBackgroundColor = "#ffffff"
+
+[theme.sidebar]
+backgroundColor = "#14294a"
+secondaryBackgroundColor = "#223a63"
+textColor = "#ffffff"
+primaryColor = "#6fb1ff"

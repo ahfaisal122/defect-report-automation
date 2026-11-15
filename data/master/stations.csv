@@ -1,0 +1,13 @@
+station_code,name
+incoming_inspection,Incoming inspection
+pre_assembly,Pre-assembly
+main_assembly,Main assembly
+wiring_check,Wiring check
+gas_filling,Gas filling
+gas_leak_test,Gas leak test
+mechanical_operation_test,Mechanical operation test
+high_voltage_test,High voltage test
+partial_discharge_test,Partial discharge test
+final_inspection,Final inspection
+packing,Packing
+dispatch,Dispatch

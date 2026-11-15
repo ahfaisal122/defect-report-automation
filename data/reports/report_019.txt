@@ -1,0 +1,21 @@
+From: Adam Edwards <adam.edwards@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Sun, 11 Oct 2026 17:29
+Subject: FW: Pressure drop on CB-72-1250 from production order SG-2026-0060
+
+Hi team, please take a look at the report below regarding the recent assembly issue so we can coordinate with the supplier. Best, Adam
+
+---------- Forwarded message ----------
+From: Thilo Allen <thilo.allen@voltaris-switchgear.example>
+Date: Sun, 11 Oct 2026 11:16
+Subject: Pressure drop on CB-72-1250 from production order SG-2026-0060
+To: Adam Edwards <adam.edwards@voltaris-switchgear.example>
+
+Hi Quality Team,
+
+I am writing to report a major issue we ran into today, 11 Oct 2026, down on the shop floor during the gas filling station procedures. We were processing production order SG-2026-0060 and noticed a problem with the circuit breaker pole, part number CB-72-1250, which was delivered by Nordhaven Schalttechnik GmbH.
+
+During the standard holding period, we registered a noticeable pressure drop. Upon spraying down the unit to check for escaping gas, we located a leak right at one of the weld seams on the main body. Only 1 quantity is affected right now, but this definitely needs a proper review before we can move the unit any further down the line.
+
+Best regards,
+Thilo Allen

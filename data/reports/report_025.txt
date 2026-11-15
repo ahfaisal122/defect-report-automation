@@ -1,0 +1,15 @@
+From: Rosa Rhodes <rosa.rhodes@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Thu, 22 Oct 2026 09:14
+Subject: Defect report for production order SG-2026-0016
+
+Hi Quality Team,
+
+I am writing to report a major issue we caught yesterday on 21 Oct 2026 during the Wiring check station for production order SG-2026-0016. We were working on the DS-72-2000 disconnector components supplied by Moravia Kontakt s.r.o. and noticed that 2 of the fasteners were not tightened to the specified torque. This is a critical assembly step, so we stopped work on those units immediately to prevent them from moving down the line.
+
+Additionally, we found a second major problem during the Main assembly station on the same order. This time it involves part number GK-420-1184, which are the 560 mm O-ring seals provided by Halden Seals Sp. z o.o. Upon checking the components, we found that the hole pattern on 24 of these seals is offset from the drawing, making them completely unusable in their current state.
+
+Please let us know how you would like us to handle the quarantine and return process for both batches so we can keep the shop floor moving.
+
+Best regards,
+Rosa Rhodes

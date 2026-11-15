@@ -1,0 +1,13 @@
+From: Nicole Röhricht <nicole.roehricht@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Tue, 15 Sep 2026 08:03
+Subject: Quality issue on production order SG-2026-0417
+
+Hi Quality Team,
+
+Yesterday, on 2026-09-14, I was checking the 4 units of part number DS-72-2500 from Moravia Kontakt s.r.o. at Final inspection and noticed a serious problem with the assembly. The fasteners on all four disconnectors were not tightened to the specified torque at all, leaving them completely loose and unable to hold under operating conditions.
+
+Because the internal connections are compromised and parts are unusable, we cannot proceed without immediate supplier action or complete unit replacement, which will likely push back our shipping schedule for production order SG-2026-0417.
+
+Best regards,
+Nicole Röhricht

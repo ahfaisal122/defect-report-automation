@@ -1,0 +1,51 @@
+order_number,customer_project,bay_type,due_date
+SG-2026-0003,Sandkamp 420 kV Grid Connection,line bay,2027-06-12
+SG-2026-0016,Falkenried 72 kV Substation,measurement bay,2026-12-08
+SG-2026-0052,Lindholm 72 kV Converter Station,line bay,2027-02-22
+SG-2026-0059,Hafenkante 145 kV Substation,measurement bay,2027-02-06
+SG-2026-0060,Tannenhof 72 kV Offshore Platform,bus coupler bay,2027-07-12
+SG-2026-0061,Osterloh 145 kV Grid Connection,bus coupler bay,2027-06-24
+SG-2026-0063,Westhafen 420 kV Offshore Platform,cable bay,2027-08-28
+SG-2026-0096,Hohenfeld 245 kV Substation,cable bay,2026-12-27
+SG-2026-0159,Hohenfeld 72 kV Grid Connection,measurement bay,2027-04-07
+SG-2026-0169,Westhafen 245 kV Offshore Platform,line bay,2026-12-10
+SG-2026-0171,Grunwald Sud 145 kV Offshore Platform,transformer bay,2027-02-05
+SG-2026-0195,Wolkenstein 420 kV Offshore Platform,measurement bay,2027-05-03
+SG-2026-0219,Wolkenstein 72 kV Offshore Platform,line bay,2026-12-09
+SG-2026-0223,Marienwerk 145 kV Substation,line bay,2027-01-30
+SG-2026-0243,Marienwerk 145 kV Offshore Platform,measurement bay,2027-06-15
+SG-2026-0272,Osterloh 145 kV Grid Connection,bus coupler bay,2027-05-15
+SG-2026-0293,Marienwerk 420 kV Substation,line bay,2027-02-05
+SG-2026-0304,Marienwerk 420 kV Substation,line bay,2027-05-28
+SG-2026-0322,Westhafen 245 kV Offshore Platform,transformer bay,2027-08-03
+SG-2026-0389,Wolkenstein 420 kV Converter Station,measurement bay,2026-12-02
+SG-2026-0400,Seebruck 72 kV Substation,transformer bay,2027-08-02
+SG-2026-0411,Grunwald Sud 72 kV Grid Connection,cable bay,2027-06-30
+SG-2026-0417,Elbtal 145 kV Offshore Platform,bus coupler bay,2027-03-14
+SG-2026-0434,Grunwald Sud 72 kV Grid Connection,transformer bay,2027-01-17
+SG-2026-0466,Grunwald Sud 72 kV Converter Station,measurement bay,2027-09-17
+SG-2026-0493,Lindholm 145 kV Grid Connection,transformer bay,2027-03-12
+SG-2026-0498,Nordwind 420 kV Grid Connection,bus coupler bay,2026-12-29
+SG-2026-0499,Lindholm 420 kV Offshore Platform,transformer bay,2026-12-30
+SG-2026-0554,Brackwede Ost 72 kV Substation,cable bay,2027-08-14
+SG-2026-0556,Steinau 145 kV Converter Station,bus coupler bay,2027-06-01
+SG-2026-0570,Lindholm 245 kV Grid Connection,line bay,2027-08-02
+SG-2026-0594,Brackwede Ost 145 kV Offshore Platform,bus coupler bay,2027-07-10
+SG-2026-0668,Marienwerk 72 kV Offshore Platform,measurement bay,2027-05-12
+SG-2026-0678,Wolkenstein 420 kV Offshore Platform,line bay,2027-09-21
+SG-2026-0714,Marienwerk 72 kV Grid Connection,measurement bay,2027-03-25
+SG-2026-0736,Elbtal 245 kV Substation,measurement bay,2027-05-17
+SG-2026-0749,Grunwald Sud 420 kV Offshore Platform,cable bay,2027-08-09
+SG-2026-0754,Brackwede Ost 72 kV Grid Connection,bus coupler bay,2027-06-06
+SG-2026-0766,Tannenhof 72 kV Substation,measurement bay,2027-08-19
+SG-2026-0772,Grunwald Sud 145 kV Converter Station,line bay,2027-05-24
+SG-2026-0803,Birkenau 245 kV Offshore Platform,line bay,2027-07-02
+SG-2026-0804,Sandkamp 245 kV Offshore Platform,cable bay,2026-12-14
+SG-2026-0857,Brackwede Ost 245 kV Offshore Platform,measurement bay,2027-02-08
+SG-2026-0870,Steinau 145 kV Converter Station,cable bay,2027-02-26
+SG-2026-0886,Birkenau 145 kV Offshore Platform,cable bay,2026-12-25
+SG-2026-0925,Kaltenbach 72 kV Offshore Platform,transformer bay,2027-02-09
+SG-2026-0949,Hafenkante 420 kV Offshore Platform,cable bay,2026-12-31
+SG-2026-0981,Auenland 420 kV Grid Connection,measurement bay,2027-02-23
+SG-2026-0992,Falkenried 420 kV Substation,bus coupler bay,2027-06-11
+SG-2026-0993,Hohenfeld 245 kV Grid Connection,bus coupler bay,2027-03-21

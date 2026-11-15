@@ -1,0 +1,14 @@
+From: Leah Ruppersberger <leah.ruppersberger@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Sat, 31 Oct 2026 10:43
+Subject: Pressure test failure on production order SG-2026-0925
+
+Hi Quality Team,
+
+During the gas filling station procedures on 29 Oct 2026, we encountered a serious issue with production order SG-2026-0925 involving part number EN-245-0850 which are the enclosure castings for the 245 kV cable boxes from Castellan Fundiciones S.A. We found that 3 units failed the pressure test due to a noticeable pressure drop over the required holding period, and upon closer inspection, we located the leak directly at a weld seam.
+
+This situation creates an immediate safety risk with a severe danger of SF6 gas release and potential electrical failure once these units are placed into service, meaning we must completely halt shipment of these housings until we determine how to proceed.
+
+Best regards,
+Leah Ruppersberger
+Shop Floor Assembly

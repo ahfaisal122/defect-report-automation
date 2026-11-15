@@ -1,0 +1,15 @@
+From: Barbara Bradley <barbara.bradley@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Wed, 28 Oct 2026 17:58
+Subject: issue with SG-2026-0052 castings
+
+Hi Quality Team,
+
+I am writing this quickly from incoming inspection. Yesterday on 2026-10-26 we checked the delivery of EN-72-2185 enclosure casting T-piece 72 kV parts from Ostwerk Aluminiumguss GmbH for production order SG-2026-0052.
+
+We found that the overall length is outside the drawing tolerance on 4 of the pieces. The severity of this issue is minor, but we still need to decide if we can rework them here or send them back.
+
+Please let me know how you want us to proceed so we can keep the line moving.
+
+Best regards,
+Barbara Bradley

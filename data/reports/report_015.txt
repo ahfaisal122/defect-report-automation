@@ -1,0 +1,16 @@
+From: Leokadia Matthews <leokadia.matthews@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Thu, 08 Oct 2026 09:20
+Subject: defect found on DS-72-2700 disconnectors
+
+Hi Quality team,
+
+Just wanted to let you know about an issue we ran into yesterday on 07 October 2026 down here at Incoming inspection. We were unboxing the shipment from Moravia Kontakt s.r.o. for production order SG-2026-0678 and found some damage.
+
+There are 3 units of part DS-72-2700 (Disconnector, 72 kV, 2500 A) that have a dent and chipped coating on the main frame. Looks like typical rough handling during transport, nothing internal as far as I can tell right now.
+
+The overall severity is minor, but we cant pass them to the line looking like this so I have put them on hold in the quarantine area.
+
+Let me know what you need from me.
+Best regards,
+Leokadia Matthews

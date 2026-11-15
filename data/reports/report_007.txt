@@ -1,0 +1,16 @@
+From: Patricia Hauffer <patricia.hauffer@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Sun, 20 Sep 2026 07:05
+Subject: Wrong CT-420-0600 variant from Lindqvara received in Main assembly
+
+Hi Quality Team,
+
+I am writing to report an issue we found yesterday on 19 Sep 2026 while working in Main assembly on the bay currently on the line. We unpacked the current transformers for the setup and noticed a discrepancy with the delivery from Lindqvara Instrument AB.
+
+Specifically, we received the wrong variant for part number CT-420-0600. The text printed on the exterior label does not match the actual technical configuration inside, which we caught before mounting anything.
+
+There are 6 units affected by this mix-up. The severity of this issue is minor because we caught it early, but we cannot proceed with these specific blocks without getting the correct units swapped out first.
+
+Please let us know how to proceed with the return.
+Best regards,
+Patricia Hauffer

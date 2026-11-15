@@ -1,0 +1,17 @@
+From: Stanley Young <stanley.young@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Fri, 23 Oct 2026 11:54
+Subject: Defect report SG-2026-0498 EN-72-4841
+
+Hi Quality Team,
+
+During the gas filling process on 21 October 2026, we encountered a serious issue with production order SG-2026-0498 involving part number EN-72-4841. Specifically, 5 units supplied by Ostwerk Aluminiumguss GmbH failed the pressure holding test due to a pressure drop, and we traced the leaks directly to a weld seam on the enclosure castings.
+
+These castings are completely unusable for the 72 kV breaker housings and cannot be repaired on the shop floor, meaning we require immediate replacements or direct intervention from the supplier. Because of this batch failure, we are facing a real risk of delaying the entire order if these housings are not replaced promptly.
+
+Best regards,
+Stanley Young
+Assembly Quality Inspector
+High-Voltage Switchgear Production
++49 30 5550 4821
+This email contains confidential information intended solely for the use of the individual or entity to whom it is addressed. If you are not the intended recipient, be aware that any review, disclosure, copying, distribution, or use of the contents of this transmission is strictly prohibited. If you have received this in error, please immediately notify the sender by return email and permanently delete the original message.

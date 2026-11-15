@@ -1,0 +1,25 @@
+From: Tomas Atzler <tomas.atzler@voltaris-switchgear.example>
+To: quality-reports@voltaris-switchgear.example
+Sent: Wed, 14 Oct 2026 21:44
+Subject: FW: Wiring error found on SG-2026-0949
+
+Hi team, please take a look at this shop floor report and advise on the next steps for the rework. Best, Tomas
+
+---------- Forwarded message ----------
+From: Kenan Dippel <kenan.dippel@voltaris-switchgear.example>
+Date: Wed, 14 Oct 2026 15:03
+Subject: Wiring error found on SG-2026-0949
+To: Tomas Atzler <tomas.atzler@voltaris-switchgear.example>
+
+Hi Quality Team,
+
+I am writing to report an issue I found today, 14 Oct 2026, during the wiring check station for production order SG-2026-0949.
+
+Specifically, the CB-145-2000 circuit breaker pole from Tessaro Interruttori S.r.l. has its auxiliary wiring connected to the wrong terminals.
+
+There is only 1 unit affected by this mistake, and I would classify the severity as minor since we caught it early before any power testing.
+
+Please let us know how you want us to proceed with the correction.
+
+Best regards,
+Kenan Dippel
