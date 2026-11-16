@@ -617,6 +617,9 @@ def tickets_page() -> None:
     with sent:
         st.markdown("**Ticket as posted**")
         details = ticket.payload.model_dump(exclude={"source_report", "approved_by"})
+        if ticket.note and ticket.payload.reviewer_note is None:
+            # A ticket from before notes were sent along: show the note, and say so.
+            details["reviewer_note"] = f"{ticket.note} (not sent with this ticket)"
         rows = [
             {"Field": FIELD_LABELS[name], "Value": "–" if value is None else str(value)}
             for name, value in details.items()
@@ -625,11 +628,6 @@ def tickets_page() -> None:
         st.dataframe(
             pd.DataFrame(rows), hide_index=True, width="stretch", height=35 * (len(rows) + 1) + 3
         )
-        if ticket.note and ticket.payload.reviewer_note is None:
-            # An older ticket: its note was written before notes were sent along.
-            st.markdown("**Reviewer's note**")
-            st.write(ticket.note)
-            st.caption("This note is in the audit trail only. It was not sent with the ticket.")
 
 
 # --- metrics page ----------------------------------------------------------------------

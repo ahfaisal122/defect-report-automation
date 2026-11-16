@@ -231,7 +231,7 @@ def test_tickets_page_lists_posted_tickets_with_their_content(app_db: sqlite3.Co
     assert list(listing["Severity"]) == ["critical"]
     details = app.dataframe[1].value
     assert "Anna Keller" in list(details["Value"])  # the ticket carries the real reporter
-    assert "Checked with the supplier" in [m.value for m in app.markdown]  # the reviewer's note
+    assert "Checked with the supplier (not sent with this ticket)" in list(details["Value"])
     assert "At incoming inspection" in report_boxes(app)[0]
 
 
