@@ -55,6 +55,7 @@ FIELD_LABELS = {
     "detected_at": "Detected at (station)",
     "detected_on": "Detected on",
     "reporter": "Reporter",
+    "reviewer_note": "Reviewer note",
 }
 
 # The number boxes come in four tones. The tone follows the meaning of the number, the
@@ -111,6 +112,20 @@ h3 {{ color: {NAVY}; }}
     background-color: #ffffff; border: 1px solid {CARD_BORDER}; border-radius: 0.6rem;
 }}
 [class*="st-key-card_"] {{ padding: 0.75rem 1rem; }}
+/* Title row: the title, the refresh button next to it, one blue line under both. */
+.st-key-page_head {{
+    border-bottom: 3px solid {SERIES_COLOR}; padding-bottom: 0.4rem; margin-bottom: 0.75rem;
+}}
+.st-key-page_head h1 {{ border-bottom: none; padding-bottom: 0; }}
+.st-key-page_head [data-testid="stHeading"]:has(h1) {{ margin-bottom: 0; }}
+.st-key-refresh_button button {{ color: {SERIES_COLOR}; }}
+.st-key-refresh_button button [data-testid="stIconMaterial"] {{ font-size: 2rem; }}
+/* The system name in the menu looks like a heading and acts like a button. */
+.st-key-home_button button {{ padding: 0; text-align: left; justify-content: flex-start; }}
+.st-key-home_button button p {{
+    font-size: 1.45rem; font-weight: 700; line-height: 1.25; color: #ffffff; text-align: left;
+}}
+.st-key-home_button button:hover p {{ color: #6fb1ff; }}
 /* The report picker is the first thing a reviewer uses, so its label stands out. */
 .st-key-report_picker [data-testid="stWidgetLabel"] p {{
     font-size: 1.15rem; font-weight: 700; color: {NAVY};
@@ -292,7 +307,7 @@ def _field_form(item: ReviewItem, stations: list[str]) -> tuple[dict[str, object
             _text(f.defect_description if f else None),
             key=k + "description",
         )
-        note = st.text_input("Note (optional, stored in the audit trail)", key=k + "note")
+        note = st.text_input("Note (optional, sent with the ticket)", key=k + "note")
         approve_col, reject_col = st.columns(2)  # equal width, so neither label is cut off
         approved = approve_col.form_submit_button(
             "Approve and post", type="primary", width="stretch", key="approve_button"
@@ -410,9 +425,26 @@ def _start_decision(
     }
 
 
+def _page_title(title: str) -> None:
+    """The page title with a refresh button next to it.
+
+    The button reloads the page's data and keeps the login. The browser's own reload
+    starts a new session, and a new session has to log in again.
+    """
+    with st.container(horizontal=True, vertical_alignment="center", key="page_head"):
+        st.title(title, width="content")
+        st.button(
+            "",
+            icon=":material/refresh:",
+            help="Refresh this page. You stay logged in.",
+            key="refresh_button",
+            type="tertiary",
+        )  # a click reruns the script, which reads everything from the database again
+
+
 def review_page() -> None:
     reviewer = st.session_state["reviewer"]
-    st.title("Review queue")
+    _page_title("Review queue")
     if flash := st.session_state.pop("flash", None):
         st.success(flash)
 
@@ -479,7 +511,7 @@ def review_page() -> None:
 
 
 def rejected_page() -> None:
-    st.title("Rejected")
+    _page_title("Rejected")
     rejected = list_rejected(open_db())
     if not rejected:
         st.info("No reports have been rejected.")
@@ -525,7 +557,7 @@ def rejected_page() -> None:
 
 
 def tickets_page() -> None:
-    st.title("Tickets")
+    _page_title("Tickets")
     tickets = list_tickets(open_db())
     if not tickets:
         st.info("No tickets have been posted yet.")
@@ -589,7 +621,15 @@ def tickets_page() -> None:
             {"Field": FIELD_LABELS[name], "Value": "–" if value is None else str(value)}
             for name, value in details.items()
         ]
-        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+        # Tall enough for every row, so the last field is never hidden behind a scrollbar.
+        st.dataframe(
+            pd.DataFrame(rows), hide_index=True, width="stretch", height=35 * (len(rows) + 1) + 3
+        )
+        if ticket.note and ticket.payload.reviewer_note is None:
+            # An older ticket: its note was written before notes were sent along.
+            st.markdown("**Reviewer's note**")
+            st.write(ticket.note)
+            st.caption("This note is in the audit trail only. It was not sent with the ticket.")
 
 
 # --- metrics page ----------------------------------------------------------------------
@@ -673,7 +713,7 @@ def _accuracy_section() -> None:
 
 
 def metrics_page() -> None:
-    st.title("Metrics")
+    _page_title("Metrics")
     m: Metrics = compute_metrics(open_db())
     st.caption("Counted per report and per defect. Nothing here is counted per person.")
 
@@ -735,7 +775,13 @@ st.set_page_config(page_title="Defect Report Automation", layout="wide")
 st.html(APP_CSS)
 reviewer_name = require_login()
 with st.sidebar:
-    st.markdown("## Defect Report Review System")
+    # The system name works like a site logo: a click refreshes the page, login kept.
+    st.button(
+        "Defect Report Review System",
+        key="home_button",
+        type="tertiary",
+        help="Refresh this page. You stay logged in.",
+    )
     st.divider()
     st.write(f"Logged in as **{reviewer_name}**")
     page = st.radio("Page", ["Review queue", "Tickets", "Rejected", "Metrics"])

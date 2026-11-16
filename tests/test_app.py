@@ -215,6 +215,11 @@ def test_tickets_page_lists_posted_tickets_with_their_content(app_db: sqlite3.Co
         "INSERT INTO tickets (report_id, qm_ticket_id, posted_via, posted_at) "
         "VALUES (1, 'QN-000042', 'api', '2026-11-11T10:00:01+00:00')"
     )
+    app_db.execute(
+        "INSERT INTO audit_log (run_id, report_id, event, detail_json, created_at) "
+        "VALUES ('run-2', 1, 'reviewed', ?, '2026-11-11T10:00:00+00:00')",
+        (json.dumps({"action": "approve", "note": "Checked with the supplier"}),),
+    )
     app_db.execute("UPDATE reports SET status = 'posted'")
     app_db.commit()
     app.run()
@@ -226,6 +231,7 @@ def test_tickets_page_lists_posted_tickets_with_their_content(app_db: sqlite3.Co
     assert list(listing["Severity"]) == ["critical"]
     details = app.dataframe[1].value
     assert "Anna Keller" in list(details["Value"])  # the ticket carries the real reporter
+    assert "Checked with the supplier" in [m.value for m in app.markdown]  # the reviewer's note
     assert "At incoming inspection" in report_boxes(app)[0]
 
 
@@ -270,3 +276,16 @@ def test_empty_header_line_is_left_out_of_the_report_box(app_db: sqlite3.Connect
     box = report_boxes(login())[0]
     assert "To:" not in box
     assert "<strong>From:</strong>" in box and "<strong>Sent:</strong>" in box
+
+
+def test_refresh_buttons_reload_the_data_and_keep_the_login(app_db: sqlite3.Connection) -> None:
+    app = login()
+    assert app.metric[0].value == "1"  # one report waiting
+    submit_review(app_db, "run-2", 1, "Someone else", REJECT)  # the queue changes meanwhile
+
+    app.button(key="refresh_button").click().run()
+    assert app.title[0].value == "Review queue"  # still logged in
+    assert app.metric[0].value == "0"
+
+    app.sidebar.button(key="home_button").click().run()
+    assert app.title[0].value == "Review queue"

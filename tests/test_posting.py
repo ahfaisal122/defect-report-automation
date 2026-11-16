@@ -8,7 +8,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from defect_automation.config import Settings
-from defect_automation.db import utc_now
+from defect_automation.db import audit, utc_now
 from defect_automation.pipeline import requeue_failed
 from defect_automation.posting import (
     PostingBlocked,
@@ -16,6 +16,7 @@ from defect_automation.posting import (
     TicketPayload,
     build_payload,
     idempotency_key,
+    list_tickets,
     post_approved,
     post_report,
     post_with_retries,
@@ -257,6 +258,7 @@ def test_ticket_carries_the_real_reporter_name(conn: sqlite3.Connection) -> None
     payload = build_payload(conn, approved_report(conn))
     assert payload.reporter == "Anna Keller"
     assert payload.approved_by == "auto"
+    assert payload.reviewer_note is None  # nobody reviewed it, so there is no note
     assert payload.source_report == "hash-1"
     stored = conn.execute("SELECT fields_json FROM extractions").fetchone()[0]
     assert json.loads(stored)["reporter"] == "[PERSON_1]"  # the database copy stays masked
@@ -291,11 +293,20 @@ def test_critical_report_posts_after_a_human_approval_with_the_edited_fields(
         "VALUES (?, 'faisal', 'approve', ?, ?)",
         (report["id"], json.dumps(edited), utc_now()),
     )
+    audit(
+        conn,
+        "run-1",
+        "reviewed",
+        report["id"],
+        {"action": "approve", "note": " Supplier informed "},
+    )
     conn.commit()
 
     ticket_id = post_report(conn, client, settings, "run-1", report, no_sleep)
     posted = client.get(f"/api/v1/notifications/{ticket_id}").json()
     assert posted["approved_by"] == "faisal"
+    assert posted["reviewer_note"] == "Supplier informed"  # the note travels with the ticket
+    assert list_tickets(conn)[0].payload.reviewer_note == "Supplier informed"
     assert posted["quantity_affected"] == 3
     assert posted["severity"] == "critical"
 

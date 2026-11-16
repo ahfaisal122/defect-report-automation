@@ -53,6 +53,7 @@ class NotificationIn(BaseModel):
     reporter: str | None
     source_report: str
     approved_by: str
+    reviewer_note: str | None = None
 
 
 class NotificationOut(NotificationIn):

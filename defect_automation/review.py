@@ -9,7 +9,7 @@ import sqlite3
 from dataclasses import dataclass, field
 from datetime import date, datetime
 
-from defect_automation.db import audit, set_status, utc_now
+from defect_automation.db import audit, review_note, set_status, utc_now
 from defect_automation.domain import ReportStatus
 from defect_automation.extraction import prepare_report_text
 from defect_automation.logging_setup import get_logger
@@ -165,18 +165,13 @@ def list_rejected(conn: sqlite3.Connection) -> list[RejectedReport]:
     ).fetchall()
     rejected = []
     for row in rows:
-        logged = conn.execute(
-            "SELECT detail_json FROM audit_log WHERE report_id = ? AND event = 'reviewed' "
-            "ORDER BY id DESC LIMIT 1",
-            (row["id"],),
-        ).fetchone()
         rejected.append(
             RejectedReport(
                 report_id=row["id"],
                 file_name=row["file_name"],
                 rejected_at=row["reviewed_at"],
                 reviewer=row["reviewer"],
-                note=json.loads(logged["detail_json"]).get("note", "") if logged else "",
+                note=review_note(conn, row["id"]),
                 original_text=parse_report(
                     row["source_type"], row["raw_text"], clean=False
                 ).as_text(),

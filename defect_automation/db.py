@@ -55,3 +55,13 @@ def audit(
         "VALUES (?, ?, ?, ?, ?)",
         (run_id, report_id, event, json.dumps(detail or {}, default=str), utc_now()),
     )
+
+
+def review_note(conn: sqlite3.Connection, report_id: int) -> str:
+    """The note the reviewer left with the latest decision on a report, or an empty text."""
+    logged = conn.execute(
+        "SELECT detail_json FROM audit_log WHERE report_id = ? AND event = 'reviewed' "
+        "ORDER BY id DESC LIMIT 1",
+        (report_id,),
+    ).fetchone()
+    return json.loads(logged["detail_json"]).get("note", "") if logged else ""

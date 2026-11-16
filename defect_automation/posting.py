@@ -11,6 +11,7 @@ Three things keep a report from ever becoming two tickets:
 The client can only create. It has no code path that edits, closes or deletes a ticket.
 """
 
+import json
 import random
 import sqlite3
 import time
@@ -21,7 +22,7 @@ import httpx
 from pydantic import BaseModel
 
 from defect_automation.config import Settings
-from defect_automation.db import audit, set_status, utc_now
+from defect_automation.db import audit, review_note, set_status, utc_now
 from defect_automation.domain import ReportStatus, Severity
 from defect_automation.extraction import prepare_report_text
 from defect_automation.logging_setup import get_logger
@@ -48,6 +49,7 @@ class TicketPayload(BaseModel):
     reporter: str | None  # the real name, restored from the raw report
     source_report: str  # file hash, links the ticket back to its source
     approved_by: str
+    reviewer_note: str | None = None  # what the reviewer wrote when approving, if anything
 
 
 class PostingError(RuntimeError):
@@ -117,6 +119,7 @@ def build_payload(conn: sqlite3.Connection, report: sqlite3.Row) -> TicketPayloa
         reporter=unmask(fields.reporter, mapping),
         source_report=report["file_hash"],
         approved_by=approval["reviewer"] if approval is not None else AUTO_APPROVER,
+        reviewer_note=(review_note(conn, report["id"]).strip() or None) if approval else None,
     )
 
 
@@ -128,6 +131,19 @@ class PostedTicket:
     report_id: int
     payload: TicketPayload  # what was sent to the QM system, rebuilt from stored data
     original_text: str
+    note: str = ""  # the reviewer's note from the audit trail, whether it was sent or not
+
+
+def _payload_as_posted(conn: sqlite3.Connection, report: sqlite3.Row) -> TicketPayload:
+    """The ticket as it went out. Tickets posted before notes were sent along carry none."""
+    payload = build_payload(conn, report)
+    posted = conn.execute(
+        "SELECT detail_json FROM audit_log WHERE report_id = ? AND event = 'posted' "
+        "ORDER BY id DESC LIMIT 1",
+        (report["id"],),
+    ).fetchone()
+    sent = bool(posted and json.loads(posted["detail_json"]).get("reviewer_note_sent"))
+    return payload if sent else payload.model_copy(update={"reviewer_note": None})
 
 
 def list_tickets(conn: sqlite3.Connection) -> list[PostedTicket]:
@@ -142,8 +158,9 @@ def list_tickets(conn: sqlite3.Connection) -> list[PostedTicket]:
             posted_at=row["posted_at"],
             file_name=row["file_name"],
             report_id=row["id"],
-            payload=build_payload(conn, row),
+            payload=_payload_as_posted(conn, row),
             original_text=parse_report(row["source_type"], row["raw_text"], clean=False).as_text(),
+            note=review_note(conn, row["id"]),
         )
         for row in rows
     ]
@@ -256,6 +273,7 @@ def post_report(
             "attempts": result.attempts,
             "replayed": result.replayed,
             "approved_by": payload.approved_by,
+            "reviewer_note_sent": payload.reviewer_note is not None,
         },
     )
     set_status(conn, run_id, report_id, ReportStatus.POSTED)

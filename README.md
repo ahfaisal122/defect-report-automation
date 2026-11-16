@@ -73,7 +73,7 @@ python -m defect_automation eval                 # score the 20 labelled reports
 python -m defect_automation eval --history       # compare all saved eval runs
 python -m defect_automation ingest | extract | post   # single steps
 python -m defect_automation api                  # pipeline API for UiPath, port 8002
-pytest                                           # 119 unit and integration tests
+pytest                                           # 120 unit and integration tests
 ```
 
 To try a new report, drop a `.txt` or `.eml` file into `data/reports/` and run again.
@@ -389,7 +389,7 @@ calls, next to the parser, the validators and the QM API.
 | UI | Login, review, edit, approve, reject, the tickets page, the rejected page and the metrics page, driven by Streamlit's test driver |
 | AI evaluation | `python -m defect_automation eval` on the 20 labelled reports |
 
-119 tests, 86% line coverage (`pytest --cov=defect_automation --cov=mock_qm`). The parts
+120 tests, 86% line coverage (`pytest --cov=defect_automation --cov=mock_qm`). The parts
 without tests are the command-line wrapper and the live Gemini client.
 
 How the eval scores:
