@@ -94,6 +94,10 @@ A box colour always means the same thing: amber is waiting for a person, green i
 red is rejected, blue is plain information. "Today" is the local day of the machine that
 runs the app.
 
+To load new data, click the round arrow next to a page title or the system name in the
+menu. Both keep the login. The browser's own reload starts a new session, which has to log
+in again.
+
 ## UiPath mail intake and trigger
 
 A UiPath workflow reads the mailbox, hands each email to the pipeline, starts a run and
