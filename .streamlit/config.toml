@@ -1,16 +1,28 @@
-# One look for every page: a soft blue-grey page, white cards, a dark blue menu.
-# The accent blue is the same blue the charts use. Green, amber and red carry meaning
-# (done, waiting, rejected) and are set in streamlit_app.py.
+# One look for every page: a light grey-blue canvas, white cards with soft borders, a dark
+# slate menu. The accent blue is the same blue the charts use. Green, amber and red carry
+# meaning (done, waiting, rejected) and are set in streamlit_app.py.
+[client]
+toolbarMode = "minimal"  # no "Deploy" button: this is an internal tool, not a demo of Streamlit
+
 [theme]
 base = "light"
-primaryColor = "#2a78d6"
-backgroundColor = "#f3f6fb"
-secondaryBackgroundColor = "#e4ebf5"
-textColor = "#1b2a41"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+primaryColor = "#2563eb"
+backgroundColor = "#f5f7fb"
+secondaryBackgroundColor = "#f1f5f9"
+textColor = "#0f172a"
 codeBackgroundColor = "#ffffff"
+borderColor = "#e2e8f0"
+dataframeBorderColor = "#e2e8f0"
+showWidgetBorder = true
+baseRadius = "0.6rem"
+buttonRadius = "0.6rem"
+baseFontSize = 15
+headingFontWeights = [700, 650, 600, 600, 600, 600]
 
 [theme.sidebar]
-backgroundColor = "#14294a"
-secondaryBackgroundColor = "#223a63"
-textColor = "#ffffff"
-primaryColor = "#6fb1ff"
+backgroundColor = "#0f172a"
+secondaryBackgroundColor = "#1e293b"
+textColor = "#e2e8f0"
+primaryColor = "#60a5fa"
+borderColor = "#1e293b"

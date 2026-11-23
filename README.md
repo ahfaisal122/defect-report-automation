@@ -238,7 +238,7 @@ calls, next to the parser, the validators and the QM API.
 | `defect_automation/evaluation.py` | Scores the pipeline on the labelled reports |
 | `defect_automation/logging_setup.py` | JSON logs with a run ID |
 | `streamlit_app.py` | Review screen, tickets page, rejected page and metrics page |
-| `.streamlit/config.toml` | The app's colour theme: soft blue-grey pages, a dark blue menu, one accent blue |
+| `.streamlit/config.toml` | The app's theme: light pages with white cards, a dark slate menu, one accent blue, the Inter font |
 | `mock_qm/app.py` | The mock QM system (FastAPI), with built-in faults |
 | `scripts/` | Synthetic data generators |
 | `data/master/` | 50 orders, 80 parts, 15 suppliers, 12 stations |
